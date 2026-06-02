@@ -19,6 +19,22 @@ def productExceptSelf(nums):
         suffix[i] = suffix[i] * prefix[i]
     return suffix
 
+# SC -> O(1) [excluding answer array]
+def prodExceptSelfOptimized(nums):
+    N = len(nums)
+    ans_array = [1]
+    temp = 1
+
+    # Create Prefix Array
+    for i in range(1, N):
+        ans_array.append(nums[i-1] * ans_array[i-1])
+    
+    for i in range(N-2, -1, -1):
+        temp = temp * nums[i+1] # calc suffix product
+        ans_array[i] = temp * ans_array[i] # ans = prefix * suffix
+    
+    return ans_array
+
 a = [1,2,3,4]
-a = productExceptSelf(a)
+a = prodExceptSelfOptimized(a)
 print(a)
